@@ -35,9 +35,9 @@ export const test5 = (arr: number[]): { even: number[]; odd: number[] } => {
     return arr.reduce(
         (acc, num) => {
             if (num % 2 === 0) {
-                acc.even.push(num);
+                acc.even.push();
             } else {
-                acc.odd.push(num);
+                acc.odd.push();
             }
             return acc;
         },
