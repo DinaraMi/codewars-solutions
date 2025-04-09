@@ -10,3 +10,10 @@ var map = function (arr: [], fn: Function) {
     }
     return returnedArray
 };
+
+var map2 = function (arr: number[], fn: (value: number, index: number) => number): number[] {
+    return arr.reduce<number[]>((acc, value, index) => {
+        acc.push(fn(value, index));
+        return acc;
+    }, []);
+};

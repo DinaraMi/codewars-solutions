@@ -17,3 +17,16 @@ var flat = function (arr: [], n: number) {
     recursive(arr, 0)
     return result
 };
+
+var flat2 = function (arr: any[], n: number): any[] {
+    const flatten = (input: any[], depth: number): any[] => {
+        return input.reduce((acc, item) => {
+            if (Array.isArray(item) && depth < n) {
+                return acc.concat(flatten(item, depth + 1));
+            }
+            return acc.concat(item);
+        }, []);
+    };
+
+    return flatten(arr, 0);
+};
