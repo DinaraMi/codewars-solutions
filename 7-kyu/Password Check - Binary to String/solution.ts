@@ -1,4 +1,4 @@
-function decodePass(passArr: string, bin:string) {
+function decodePass(passArr: [], bin:string) {
     const binaryCodes = bin.split(' ')
     const decodedString = binaryCodes.map(binaryCode => {
         const integerValue = parseInt(binaryCode, 2)
@@ -6,8 +6,6 @@ function decodePass(passArr: string, bin:string) {
     }).join('')
     if (passArr.includes(decodedString)) {
         return decodedString
-    } else {
-        return false
     }
 }
 

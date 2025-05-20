@@ -1,16 +1,44 @@
 function commonGround(s1: string, s2: string) {
-    const words1 = s1.split(' ')
-    const words2 = s2.split(' ')
-    const filterWords = words2.filter((word, index, item) => {
-        const isInS1 = words1.indexOf(word) !== -1
-        const isFirstOccurrenceInS2 = item.indexOf(word) === index;
-        return isInS1 && isFirstOccurrenceInS2
-    })
-    if (filterWords.length === 0) {
-        return "death";
-    } else {
-        return filterWords.join(' ');
+    const words1 = s1.split(' ').sort((a,b) => a - b)
+    const words2 = s2.split(' ').sort((a, b) => a - b)
+    
+    let i = 0, j = 0
+    const common = new Set<string>();
+
+    while (i < words1.length && j < words2.length) {
+        if (words1[i] === words2[j]) {
+            common.add(words1[i])
+            j++
+        } else if (words1[i] < words2[j]) {
+            i++
+        } else {
+            j++
+        }
     }
+
+    const words2Original = s2.split(" ");
+    const result: string[] = [];
+    for (const word of words2Original) {
+        if (common.has(word)) result.push(word);
+    }
+
+    return result.length > 0 ? result.join(" ") : "death";
+}
+
+function commonGround2(s1: string, s2: string): string {
+    const set1 = new Set(s1.split(" "));
+    const words2 = s2.split(" ");
+    const result: string[] = [];
+    const seen = new Set<string>();
+
+    for (const word of words2) {
+        if (set1.has(word) && !seen.has(word)) {
+            result.push(word);
+            seen.add(word);
+        }
+    }
+
+    return result.length > 0 ? result.join(" ") : "death";
 }
 
 // DESCRIPTION:
