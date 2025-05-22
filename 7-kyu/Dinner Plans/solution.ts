@@ -1,42 +1,31 @@
-function commonGround(s1: string, s2: string) {
-    const words1 = s1.split(' ').sort((a,b) => a - b)
-    const words2 = s2.split(' ').sort((a, b) => a - b)
-    
-    let i = 0, j = 0
-    const common = new Set<string>();
-
-    while (i < words1.length && j < words2.length) {
-        if (words1[i] === words2[j]) {
-            common.add(words1[i])
-            j++
-        } else if (words1[i] < words2[j]) {
-            i++
-        } else {
-            j++
-        }
-    }
+function commonGround(s1: string, s2: string): string {
+    const words1 = s1.split(' ').sort();
+    const words2 = s2.split(' ').sort();
+    let i = 0;
+    const common = words2.reduce((acc, word2) => {
+        while (i < words1.length && words1[i] < word2) i++;
+        if (i < words1.length && words1[i] === word2) acc.add(word2);
+        return acc;
+    }, new Set<string>());
 
     const words2Original = s2.split(" ");
-    const result: string[] = [];
-    for (const word of words2Original) {
-        if (common.has(word)) result.push(word);
-    }
+    const result = words2Original.reduce((acc: string[], word) => {
+        if (common.has(word)) acc.push(word);
+        return acc;
+    }, []);
 
     return result.length > 0 ? result.join(" ") : "death";
 }
-
 function commonGround2(s1: string, s2: string): string {
     const set1 = new Set(s1.split(" "));
-    const words2 = s2.split(" ");
-    const result: string[] = [];
     const seen = new Set<string>();
-
-    for (const word of words2) {
+    const result = s2.split(" ").reduce((acc: string[], word) => {
         if (set1.has(word) && !seen.has(word)) {
-            result.push(word);
             seen.add(word);
+            acc.push(word);
         }
-    }
+        return acc;
+    }, []);
 
     return result.length > 0 ? result.join(" ") : "death";
 }
